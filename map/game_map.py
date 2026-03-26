@@ -19,6 +19,7 @@ class Map:
         self.game_map = {}
         self.width = width
         self.height = height
+        
 
     def setup_default_positions(self):
         self.set_entity(Coordinates(1, 1), Lion(Coordinates(1, 1), 10, 1, 2))
@@ -41,6 +42,7 @@ class Map:
     def get_entity(self, coordinates: Coordinates):
         entity = self.game_map.get(coordinates, None)
         return entity
+  
 
     def remove_entity(self, coordinates: Coordinates):
         if coordinates in self.game_map:

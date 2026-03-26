@@ -30,12 +30,24 @@ class MainWindow(QMainWindow):
 
     def on_start_btn_clicked(self):
         self.simulation.start_actions()
+        self.print_info()
 
     def on_pause_btn_clicked(self):
         self.simulation.pause_actions()
 
     def on_step_btn_clicked(self):
         self.simulation.turn_actions()
+        self.print_info()
+        
 
     def on_reset_btn_clicked(self):
         self.simulation.reset_actions()
+
+    def print_info(self):
+        self.ui.stepValueLabel.setText(str(self.simulation.game_counter))
+        self.ui.sizeValueLabel.setText(
+            f"{self.simulation.width} x {self.simulation.height}"
+        )
+        self.ui.herbivoresValueLabel.setText(str(self.simulation.herbivores_amount))
+        self.ui.predatorsValueLabel.setText(str(self.simulation.predators_amount))
+        self.ui.grassValueLabel.setText(str(self.simulation.grasses_amount))

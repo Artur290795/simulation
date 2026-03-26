@@ -1,5 +1,10 @@
+from time import sleep
 from PySide6.QtWidgets import QGraphicsView
+from PySide6.QtCore import QTimer
 from entities.creature import Creature
+from entities.grass import Grass
+from entities.herbivores.herbivore import Herbivore
+from entities.predators.predator import Predator
 from map.game_map import Map
 from renderer import MapRenderer
 
@@ -9,33 +14,54 @@ class Simulation:
         self.game_map = Map(width, height)
         self.width = width
         self.height = height
+        self.map_renderer = None
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.turn_actions)
+        self.is_running = False
         print(f"Создана карта размером {width} на {height}")
         self.game_counter = 0
-        self.map_renderer = None
         self.map_view = None
+        self.predators_amount = None
+        self.herbivores_amount = None
+        self.grasses_amount = None
+        self.game_map.setup_default_positions()
 
     def start_actions(self):
-        self.game_map.clear()
-        self.game_map.setup_default_positions()
-        if self.map_renderer:
-            self.map_renderer.render(self.game_map)
+
+        if not self.is_running:
+            self.is_running = True
+            #delay = self.map_view.speedSlider.value() if self.map_view else 200
+            delay = 1500
+            self.timer.start(delay)
+            self.update_world_info()
 
     def turn_actions(self):
+        if not self.is_running:
+            return
         creatures = [
             x for x in self.game_map.game_map.values() if isinstance(x, Creature)
         ]
         for creature in creatures:
             if creature.coordinates is not None:
                 creature.make_move(self.game_map)
-        self.game_counter += 1
-        if self.map_renderer:
-            self.map_renderer.render(self.game_map)
+        self.map_renderer.render(self.game_map)
+        self.update_world_info()
+
+        if self.herbivores_amount == 0:
+            self.pause_actions()
 
     def pause_actions(self):
-        print(2)
+        self.timer.stop()
+        self.is_running = False
 
     def reset_actions(self):
-        print(4)
+        self.timer.stop()
+        self.is_running = False
+        self.game_map.clear()
+        self.game_map.setup_default_positions()
+        self.game_counter = 0
+        self.map_renderer.render(self.game_map)
+        self.update_world_info()
 
     def set_map_view(self, map_view: QGraphicsView) -> None:
         self.map_view = map_view
@@ -47,3 +73,16 @@ class Simulation:
                 parent_layout.replaceWidget(self.map_view, self.map_renderer)
                 self.map_view.deleteLater()
                 self.map_view = self.map_renderer
+        self.map_renderer.render(self.game_map)
+
+    def update_world_info(self):
+        self.game_counter += 1
+        self.predators_amount = len(
+            [x for x in self.game_map.game_map.values() if isinstance(x, Predator)]
+        )
+        self.herbivores_amount = len(
+            [x for x in self.game_map.game_map.values() if isinstance(x, Herbivore)]
+        )
+        self.grasses_amount = len(
+            [x for x in self.game_map.game_map.values() if isinstance(x, Grass)]
+        )
