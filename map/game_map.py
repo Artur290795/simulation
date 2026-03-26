@@ -63,7 +63,9 @@ class Map:
             return True
         if isinstance(creature, Herbivore) and isinstance(cell_value, Grass):
             return True
-        if isinstance(creature, Predator) and isinstance(cell_value, Grass):
+        if isinstance(creature, Predator) and (
+            isinstance(cell_value, Grass) or isinstance(cell_value, Herbivore)
+        ):
             return True
         return False
 

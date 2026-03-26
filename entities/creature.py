@@ -5,6 +5,7 @@ from collections import deque
 from entities.entity import Entity
 from enums.coordinates import Coordinates
 
+
 class Creature(Entity):
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
         super().__init__(coordinates)
@@ -12,10 +13,12 @@ class Creature(Entity):
         self.speed = speed
 
     @abstractmethod
-    def make_move(self, game_map: 'Map'):   # строковая аннотация
+    def make_move(self, game_map: "Map"):  # строковая аннотация
         pass
 
-    def find_path_to_target(self, game_map: 'Map', start_cell: Coordinates, is_target_cell) -> Coordinates:
+    def find_path_to_target(
+        self, game_map: "Map", start_cell: Coordinates, is_target_cell
+    ) -> Coordinates:
         queue = deque()
         queue.append(start_cell)
         visited_cells = set()
@@ -36,7 +39,9 @@ class Creature(Entity):
                 neighbour_cell = Coordinates(new_x, new_y)
                 if not game_map.is_valid_coordinates(neighbour_cell):
                     continue
-                if neighbour_cell not in visited_cells and game_map.is_walkable_cell(neighbour_cell, self):
+                if neighbour_cell not in visited_cells and game_map.is_walkable_cell(
+                    neighbour_cell, self
+                ):
                     visited_cells.add(neighbour_cell)
                     parent[neighbour_cell] = current_cell
                     queue.append(neighbour_cell)
