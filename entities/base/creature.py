@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from collections import deque
 
-from entities.entity import Entity
+from entities.base.entity import Entity
 from enums.coordinates import Coordinates
 
 

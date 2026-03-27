@@ -1,4 +1,4 @@
-from entities.entity import Entity
+from entities.base.entity import Entity
 from enums.coordinates import Coordinates
 
 

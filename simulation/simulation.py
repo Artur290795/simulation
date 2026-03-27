@@ -1,8 +1,8 @@
 from time import sleep
 from PySide6.QtWidgets import QGraphicsView
 from PySide6.QtCore import QTimer
-from entities.creature import Creature
-from entities.grass import Grass
+from entities.base.creature import Creature
+from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
 from map.game_map import Map
@@ -27,7 +27,6 @@ class Simulation:
         self.game_map.setup_default_positions()
 
     def start_actions(self):
-
         if not self.is_running:
             self.is_running = True
             #delay = self.map_view.speedSlider.value() if self.map_view else 200

@@ -1,7 +1,7 @@
-from entities.entity import Entity
+from entities.base.entity import Entity
 from enums.coordinates import Coordinates
 
 
-class Grass(Entity):
+class Tree(Entity):
     def __init__(self, coordinates: Coordinates):
         super().__init__(coordinates)

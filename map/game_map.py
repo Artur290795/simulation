@@ -1,8 +1,8 @@
-from entities.entity import Entity
-from entities.grass import Grass
+from entities.base.entity import Entity
+from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
-from entities.creature import Creature  # для аннотации is_walkable_cell
+from entities.base.creature import Creature  # для аннотации is_walkable_cell
 from enums.coordinates import Coordinates
 from entities.respawn_creatures import RespawnCreature
 
@@ -15,12 +15,7 @@ class Map:
         self.respawn_creature = RespawnCreature(self, 4, 4)
 
     def setup_default_positions(self):
-        self.respawn_creature.respawn_creatures()
-        # self.respawn_creature.respawn_predators()
-        # self.respawn_creature.respawn_herbivores()
-        # self.respawn_creature.respawn_rocks()
-        # self.respawn_creature.respawn_grasses()
-        # self.respawn_creature.respawn_trees()
+        self.respawn_creature.respawn()
 
     def set_entity(self, coordinates: Coordinates, entity: Entity):
         if self.is_valid_coordinates(coordinates):

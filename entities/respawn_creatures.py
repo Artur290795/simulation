@@ -1,8 +1,7 @@
 from __future__ import annotations
 from random import randint, choice
 
-from entities.entity import Entity
-from entities.grass import Grass
+from entities.static.grass import Grass
 from entities.herbivores.antelope import Antelope
 from entities.herbivores.giraffe import Giraffe
 from entities.herbivores.herbivore import Herbivore
@@ -11,8 +10,8 @@ from entities.predators.hyena import Hyena
 from entities.predators.leopard import Leopard
 from entities.predators.lion import Lion
 from entities.predators.predator import Predator
-from entities.rock import Rock
-from entities.tree import Tree
+from entities.static.rock import Rock
+from entities.static.tree import Tree
 from enums.coordinates import Coordinates
 
 
@@ -28,14 +27,14 @@ class RespawnCreature:
         self.rocks_amount = (predators_amount + herbivores_amount) // 2
         self.trees_amount = (predators_amount + herbivores_amount) // 2
 
-    def respawn_creatures(self):
-        self.respawn(self.predators_amount, Predator)
-        self.respawn(self.herbivores_amount, Herbivore)
-        self.respawn(self.grasses_amount, Grass)
-        self.respawn(self.rocks_amount, Rock)
-        self.respawn(self.trees_amount, Tree)
+    def respawn(self):
+        self.respawn_creatures(self.predators_amount, Predator)
+        self.respawn_creatures(self.herbivores_amount, Herbivore)
+        self.respawn_creatures(self.grasses_amount, Grass)
+        self.respawn_creatures(self.rocks_amount, Rock)
+        self.respawn_creatures(self.trees_amount, Tree)
 
-    def respawn(self, creature_amount: int, entity: type):
+    def respawn_creatures(self, creature_amount: int, entity: type):
         creature_respawned = 0
         while creature_respawned < creature_amount:
             new_coord = self._get_random_coordinates()
@@ -64,13 +63,16 @@ class RespawnCreature:
 
     def _get_creature_parameters(self, is_predator=False):
         creature_parameters = {}
-        hp = randint(7, 20)
-        speed = randint(2, 5)
-        creature_parameters["hp"] = hp
-        creature_parameters["speed"] = speed
         if is_predator:
+            hp = randint(7, 20)
+            speed = randint(2, 5)
             attack_power = randint(2, 4)
             creature_parameters["attack_power"] = attack_power
+        else:
+            hp = randint(10, 25)
+            speed = randint(4, 9)
+        creature_parameters["hp"] = hp
+        creature_parameters["speed"] = speed
         return creature_parameters
 
     def _get_random_coordinates(self) -> Coordinates:

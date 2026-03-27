@@ -1,5 +1,5 @@
 from __future__ import annotations
-from entities.creature import Creature
+from entities.base.creature import Creature
 from entities.herbivores.herbivore import Herbivore
 from enums.coordinates import Coordinates
 
