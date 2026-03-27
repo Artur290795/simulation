@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QLabel, QMainWindow
 
 from gui.main_window_template import Ui_MainWindow
-from simulation.simulation import Simulation
+from core.simulation import Simulation
 
 
 class MainWindow(QMainWindow):

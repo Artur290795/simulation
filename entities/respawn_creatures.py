@@ -12,7 +12,7 @@ from entities.predators.lion import Lion
 from entities.predators.predator import Predator
 from entities.static.rock import Rock
 from entities.static.tree import Tree
-from enums.coordinates import Coordinates
+from core.coordinates import Coordinates
 
 
 class RespawnCreature:

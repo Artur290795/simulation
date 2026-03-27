@@ -3,7 +3,7 @@ from abc import abstractmethod
 from collections import deque
 
 from entities.base.entity import Entity
-from enums.coordinates import Coordinates
+from core.coordinates import Coordinates
 
 
 class Creature(Entity):

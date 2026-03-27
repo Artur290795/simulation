@@ -3,7 +3,7 @@ from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
 from entities.base.creature import Creature  # для аннотации is_walkable_cell
-from enums.coordinates import Coordinates
+from core.coordinates import Coordinates
 from entities.respawn_creatures import RespawnCreature
 
 
@@ -27,7 +27,6 @@ class Map:
     def get_entity(self, coordinates: Coordinates):
         entity = self.game_map.get(coordinates, None)
         return entity
-  
 
     def remove_entity(self, coordinates: Coordinates):
         if coordinates in self.game_map:

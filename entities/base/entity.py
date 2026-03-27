@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from enums.coordinates import Coordinates
+from core.coordinates import Coordinates
 
 
 class Entity(ABC):

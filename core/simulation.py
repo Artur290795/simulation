@@ -5,8 +5,8 @@ from entities.base.creature import Creature
 from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
-from map.game_map import Map
-from renderer import MapRenderer
+from core.game_map import Map
+from core.renderer import MapRenderer
 
 
 class Simulation:

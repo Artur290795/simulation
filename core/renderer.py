@@ -9,8 +9,8 @@ from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QFont
 
 
 from entities.base.entity import Entity
-from enums.coordinates import Coordinates
-from map.game_map import Map
+from core.coordinates import Coordinates
+from core.game_map import Map
 from entities.static.grass import Grass
 from entities.herbivores.antelope import Antelope
 from entities.herbivores.giraffe import Giraffe

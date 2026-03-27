@@ -1,7 +1,7 @@
 from __future__ import annotations
 from entities.base.creature import Creature
 from entities.herbivores.herbivore import Herbivore
-from enums.coordinates import Coordinates
+from core.coordinates import Coordinates
 
 
 class Predator(Creature):
