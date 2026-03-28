@@ -8,11 +8,11 @@ from entities.respawn_creatures import RespawnCreature
 
 
 class Map:
-    def __init__(self, width, height):
+    def __init__(self, width, height, predators_amount: int, herbivores_amount: int):
         self.game_map = {}
         self.width = width
         self.height = height
-        self.respawn_creature = RespawnCreature(self, 4, 4)
+        self.respawn_creature = RespawnCreature(self, predators_amount, herbivores_amount)
 
     def setup_default_positions(self):
         self.respawn_creature.respawn()

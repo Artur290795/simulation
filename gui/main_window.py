@@ -1,17 +1,54 @@
-from PySide6.QtWidgets import QLabel, QMainWindow
+from PySide6.QtWidgets import QLabel, QMainWindow, QInputDialog, QMessageBox
 
 from gui.main_window_template import Ui_MainWindow
+from gui.validation import is_valid_number
+from gui.constants import PREDATORS_DEFAULT_AMOUNT, HERBIVORES_DEFAULT_AMOUNT
 from core.simulation import Simulation
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, width, height):
+    def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.simulation = Simulation(width, height)
+        self.simulation = None
+        self.setup_ui(20, 20)
+        self.get_creatures_amount()
+
+    def get_creatures_amount(self):
+        predators_amount, ok1 = QInputDialog.getInt(
+            self,
+            "Количество хищников",
+            "Сколько хищников разместить?",
+            PREDATORS_DEFAULT_AMOUNT,
+        )
+        if ok1:
+            herbivores_amount, ok2 = QInputDialog.getInt(
+                self,
+                "Количество травоядных",
+                "Сколько травоядных разместить?",
+                HERBIVORES_DEFAULT_AMOUNT,
+            )
+            if ok2:
+                if is_valid_number(predators_amount) and is_valid_number(
+                    herbivores_amount
+                ):
+                    self.simulation = Simulation(predators_amount, herbivores_amount)
+                    self.simulation.set_map_view(self.ui.mapView)
+                    return
+        QMessageBox.information(
+            self,
+            "Ошибка",
+            "Вы ввели не валидные значения для существ,\n"
+            "Приложение выбирает значение по умолчанию:\n"
+            f"Травоядных: {HERBIVORES_DEFAULT_AMOUNT}\n"
+            f"Хищников: {PREDATORS_DEFAULT_AMOUNT}",
+        )
+        self.simulation = Simulation(
+            PREDATORS_DEFAULT_AMOUNT, HERBIVORES_DEFAULT_AMOUNT
+        )
         self.simulation.set_map_view(self.ui.mapView)
-        self.setup_ui(width, height)
+        return
 
     def setup_ui(self, width, height):
         self.size_label = QLabel(f"{width} x {height}")
@@ -38,7 +75,6 @@ class MainWindow(QMainWindow):
     def on_step_btn_clicked(self):
         self.simulation.turn_actions()
         self.print_info()
-        
 
     def on_reset_btn_clicked(self):
         self.simulation.reset_actions()

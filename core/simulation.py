@@ -10,8 +10,10 @@ from core.renderer import MapRenderer
 
 
 class Simulation:
-    def __init__(self, width: int, height: int):
-        self.game_map = Map(width, height)
+    def __init__(
+        self, predators_amount: int, herbivores_amount: int, width=20, height=20
+    ):
+        self.game_map = Map(width, height, predators_amount, herbivores_amount)
         self.width = width
         self.height = height
         self.map_renderer = None
@@ -29,7 +31,7 @@ class Simulation:
     def start_actions(self):
         if not self.is_running:
             self.is_running = True
-            #delay = self.map_view.speedSlider.value() if self.map_view else 200
+            # delay = self.map_view.speedSlider.value() if self.map_view else 200
             delay = 1500
             self.timer.start(delay)
             self.update_world_info()
