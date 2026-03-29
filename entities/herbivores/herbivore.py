@@ -24,6 +24,7 @@ class Herbivore(Creature):
             game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
             game_map.remove_entity(self.coordinates)
             game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
+            self.hp += 1
         else:
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
             self.coordinates = next_cell

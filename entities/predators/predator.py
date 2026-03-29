@@ -23,10 +23,12 @@ class Predator(Creature):
             return
         target_entity = game_map.get_entity(Coordinates(next_cell.x, next_cell.y))
         if isinstance(target_entity, Herbivore):
-            game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
-            game_map.remove_entity(self.coordinates)
-            self.coordinates = next_cell
-            game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
+            target_entity.hp -= self.attack_power
+            if target_entity.hp <= 0:
+                game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
+                game_map.remove_entity(self.coordinates)
+                self.coordinates = next_cell
+                game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
         else:
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
             self.coordinates = next_cell
