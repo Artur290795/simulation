@@ -47,6 +47,8 @@ class Simulation(QObject):
         for creature in creatures:
             if creature.coordinates is not None:
                 creature.make_move(self.game_map)
+                if creature.hp <= 0:
+                    self.game_map.remove_entity(creature.coordinates)
         self.map_renderer.render(self.game_map)
         self.update_world_info()
 

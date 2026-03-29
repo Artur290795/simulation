@@ -33,3 +33,4 @@ class Predator(Creature):
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
             self.coordinates = next_cell
             game_map.set_entity(next_cell, self)
+        self.hp -= 1

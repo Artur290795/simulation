@@ -13,8 +13,9 @@ class Creature(Entity):
         self.speed = speed
 
     @abstractmethod
-    def make_move(self, game_map: "Map"):  # строковая аннотация
+    def make_move(self, game_map: "Map"):
         pass
+
 
     def next_cell_to_target(
         self, game_map: "Map", start_cell: Coordinates, is_target_cell
