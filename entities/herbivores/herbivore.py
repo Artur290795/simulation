@@ -9,7 +9,8 @@ class Herbivore(Creature):
         super().__init__(coordinates, hp, speed)
 
     def make_move(self, game_map: "Map"):
-        next_cell = self.find_path_to_target(
+        from entities.predators.predator import Predator
+        next_cell = self.next_cell_to_target(
             game_map,
             self.coordinates,
             is_target_cell=lambda cell: isinstance(
@@ -23,7 +24,6 @@ class Herbivore(Creature):
             game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
             game_map.remove_entity(self.coordinates)
             game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
-
         else:
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
             self.coordinates = next_cell

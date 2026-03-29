@@ -1,6 +1,5 @@
-from time import sleep
 from PySide6.QtWidgets import QGraphicsView
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QObject, QTimer, Signal
 from entities.base.creature import Creature
 from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
@@ -9,10 +8,13 @@ from core.game_map import Map
 from core.renderer import MapRenderer
 
 
-class Simulation:
+class Simulation(QObject):
+    data_changed = Signal()
+
     def __init__(
         self, predators_amount: int, herbivores_amount: int, width=20, height=20
     ):
+        super().__init__()
         self.game_map = Map(width, height, predators_amount, herbivores_amount)
         self.width = width
         self.height = height
@@ -87,3 +89,4 @@ class Simulation:
         self.grasses_amount = len(
             [x for x in self.game_map.game_map.values() if isinstance(x, Grass)]
         )
+        self.data_changed.emit()

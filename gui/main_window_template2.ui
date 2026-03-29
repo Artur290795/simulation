@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Африканская саванна — симуляция</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+/* Общий фон окна — песок */
+QMainWindow {
+    background-color: #d2b48c;
+}
+
+/* Кнопки в стиле дерева/кожи */
+QPushButton {
+    background-color: #8b5a2b;
+    border: 2px solid #c2a15b;
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #fff0e0;
+    font-weight: bold;
+    font-size: 12px;
+}
+QPushButton:hover {
+    background-color: #a5713c;
+    border-color: #e0b87a;
+}
+QPushButton:pressed {
+    background-color: #6b3e1a;
+}
+
+/* Область карты — светлый песок, рамка под дерево */
+QGraphicsView {
+    background-color: #f5e6d3;
+    border: 3px solid #b97f3a;
+    border-radius: 12px;
+}
+
+/* Группы информации и лога */
+QGroupBox {
+    color: #4e2a1a;
+    border: 2px solid #b97f3a;
+    border-radius: 8px;
+    margin-top: 0.5ex;
+    font-weight: bold;
+    background-color: rgba(210, 180, 140, 0.5);
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #4e2a1a;
+    background-color: #f5e6d3;
+}
+
+/* Метки внутри групп */
+QLabel {
+    color: #3b2a1f;
+    font-size: 12px;
+}
+
+/* Поле лога */
+QTextEdit {
+    background-color: #4a2e1e;
+    color: #f5e6d3;
+    border: 1px solid #b97f3a;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+}
+
+/* Слайдер скорости */
+QSlider::groove:horizontal {
+    height: 6px;
+    background: #c2a15b;
+    border-radius: 3px;
+}
+QSlider::handle:horizontal {
+    background: #8b5a2b;
+    width: 14px;
+    margin: -4px 0;
+    border-radius: 7px;
+}
+QSlider::handle:horizontal:hover {
+    background: #a5713c;
+}
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="topLayout">
+      <item>
+       <widget class="QPushButton" name="startButton">
+        <property name="text">
+         <string>🦁 Старт</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pauseButton">
+        <property name="text">
+         <string>⏸ Пауза</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="stepButton">
+        <property name="text">
+         <string>➡ Шаг</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="resetButton">
+        <property name="text">
+         <string>🔄 Сброс</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="speedLabel">
+        <property name="text">
+         <string>🐢 Скорость (мс):</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="speedSlider">
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="value">
+         <number>200</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="bottomLayout">
+      <item>
+       <widget class="QGroupBox" name="infoGroup">
+        <property name="title">
+         <string>📊 Информация о саванне      </string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="4" column="1">
+          <widget class="QLabel" name="grassValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="herbivoresValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="statusLabel">
+           <property name="text">
+            <string>📌 Статус:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="predatorsLabel">
+           <property name="text">
+            <string>🦁 Хищники:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="predatorsValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="grassLabel">
+           <property name="text">
+            <string>🌿 Трава:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="stepValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLabel" name="statusValueLabel">
+           <property name="text">
+            <string>Пауза</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="stepLabel">
+           <property name="text">
+            <string>⏱ Шаг:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="herbivoresLabel">
+           <property name="text">
+            <string>🦒 Травоядные:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="sizeValueLabel">
+           <property name="text">
+            <string>0 x 0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="sizeLabel">
+           <property name="text">
+            <string>🗺 Размеры:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="logGroup">
+        <property name="title">
+         <string>Карта саванны</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QGraphicsView" name="mapView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>500</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

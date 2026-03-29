@@ -28,7 +28,7 @@ class MapRenderer(QGraphicsView):
         self._scene = QGraphicsScene(self)
         self.setScene(self._scene)
         self.setRenderHint(QPainter.RenderHint.Antialiasing)
-        self.cell_size = 20
+        self.cell_size = 35
         self.game_map = None
 
     def render(self, game_map: Map):
@@ -72,20 +72,6 @@ class MapRenderer(QGraphicsView):
         for item in items:
             self._scene.removeItem(item)
         self._draw_cell(x, y)
-
-    @staticmethod
-    def _get_entity_color(entity: Entity) -> QColor:
-        if entity is None:
-            color = QColor(245, 222, 179)
-        elif isinstance(entity, Grass):
-            color = QColor(144, 238, 144)
-        elif isinstance(entity, Rock):
-            color = QColor(169, 169, 169)
-        elif isinstance(entity, Tree):
-            color = QColor(144, 238, 144)
-        else:
-            color = QColor(255, 235, 190)
-        return color
 
     @staticmethod
     def _get_emoji(entity: Entity) -> None:

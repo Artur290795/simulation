@@ -16,7 +16,7 @@ class Creature(Entity):
     def make_move(self, game_map: "Map"):  # строковая аннотация
         pass
 
-    def find_path_to_target(
+    def next_cell_to_target(
         self, game_map: "Map", start_cell: Coordinates, is_target_cell
     ) -> Coordinates:
         queue = deque()
@@ -33,10 +33,10 @@ class Creature(Entity):
                     current_cell = parent[current_cell]
                 path.reverse()
                 return path[0]
-            neighbour_cells_offsets = ((-1, 0), (1, 0), (0, -1), (0, 1))
-            for x_offset, y_offset in neighbour_cells_offsets:
-                new_x, new_y = current_cell.x + x_offset, current_cell.y + y_offset
-                neighbour_cell = Coordinates(new_x, new_y)
+            neighbour_cells_offsets = ((-1, 0), (1, 0), (0, -1), (0, 1)) # я здесь криво реализовал
+            for x_offset, y_offset in neighbour_cells_offsets:                                               # если скорость 3, то надо что бы
+                new_x, new_y = current_cell.x + x_offset, current_cell.y + y_offset                          # соседями были все ячейки от 1 до 3
+                neighbour_cell = Coordinates(new_x, new_y)                                                   # ну кароче сильно больше их будет
                 if not game_map.is_valid_coordinates(neighbour_cell):
                     continue
                 if neighbour_cell not in visited_cells and game_map.is_walkable_cell(

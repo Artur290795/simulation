@@ -12,7 +12,7 @@ class Predator(Creature):
         self.attack_power = attack_power
 
     def make_move(self, game_map: "Map"):
-        next_cell = self.find_path_to_target(
+        next_cell = self.next_cell_to_target(
             game_map,
             self.coordinates,
             is_target_cell=lambda cell: isinstance(

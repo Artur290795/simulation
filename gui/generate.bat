@@ -1,1 +1,1 @@
-pyside6-uic main_window_template.ui -o main_window_template.py
+pyside6-uic main_window_template2.ui -o main_window_template2.py

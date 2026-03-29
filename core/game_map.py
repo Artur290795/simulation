@@ -4,7 +4,7 @@ from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
 from entities.base.creature import Creature  # для аннотации is_walkable_cell
 from core.coordinates import Coordinates
-from entities.respawn_creatures import RespawnCreature
+from entities.respawn_creatures import CreatureSpawner
 
 
 class Map:
@@ -12,10 +12,12 @@ class Map:
         self.game_map = {}
         self.width = width
         self.height = height
-        self.respawn_creature = RespawnCreature(self, predators_amount, herbivores_amount)
+        self.creature_spawner = CreatureSpawner(
+            self, predators_amount, herbivores_amount
+        )
 
     def setup_default_positions(self):
-        self.respawn_creature.respawn()
+        self.creature_spawner.respawn()
 
     def set_entity(self, coordinates: Coordinates, entity: Entity):
         if self.is_valid_coordinates(coordinates):
@@ -30,6 +32,8 @@ class Map:
 
     def remove_entity(self, coordinates: Coordinates):
         if coordinates in self.game_map:
+            entity = self.game_map[coordinates]
+            entity.coordinates = None
             del self.game_map[coordinates]
 
     def is_valid_coordinates(self, coordinates: Coordinates):
@@ -39,9 +43,7 @@ class Map:
         self.game_map.clear()
 
     def move(self):
-        for coordinates, entity in self.game_map.items():
-            self.game_map[coordinates] = ""
-            self.game_map[Coordinates(coordinates.x + 1, coordinates.y)] = entity
+        pass
 
     def is_walkable_cell(self, coordinates: Coordinates, creature: Creature) -> bool:
         cell_value = self.game_map.get(coordinates, None)

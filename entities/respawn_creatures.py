@@ -15,7 +15,7 @@ from entities.static.tree import Tree
 from core.coordinates import Coordinates
 
 
-class RespawnCreature:
+class CreatureSpawner:
     PREDATORS = [Lion, Leopard, Hyena]
     HERBIVORES = [Antelope, Giraffe, Zebra]
 
