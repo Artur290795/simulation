@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 from collections import deque
+from typing import Callable
 
 from entities.base.entity import Entity
 from core.coordinates import Coordinates
@@ -16,12 +17,13 @@ class Creature(Entity):
     def make_move(self, game_map: "Map"):
         pass
 
-
-    def next_cell_to_target(
-        self, game_map: "Map", start_cell: Coordinates, is_target_cell
+    def get_path_to_target(
+        self,
+        game_map: "Map",
+        start_cell: Coordinates,
+        is_target_cell: Callable,
     ) -> Coordinates:
-        queue = deque()
-        queue.append(start_cell)
+        queue = deque([start_cell])
         visited_cells = set()
         visited_cells.add(start_cell)
         parent = {}
@@ -33,11 +35,11 @@ class Creature(Entity):
                     path.append(current_cell)
                     current_cell = parent[current_cell]
                 path.reverse()
-                return path[0]
-            neighbour_cells_offsets = ((-1, 0), (1, 0), (0, -1), (0, 1)) # я здесь криво реализовал
-            for x_offset, y_offset in neighbour_cells_offsets:                                               # если скорость 3, то надо что бы
-                new_x, new_y = current_cell.x + x_offset, current_cell.y + y_offset                          # соседями были все ячейки от 1 до 3
-                neighbour_cell = Coordinates(new_x, new_y)                                                   # ну кароче сильно больше их будет
+                return path
+            neighbour_cells_offsets = ((-1, 0), (1, 0), (0, -1), (0, 1))
+            for x_offset, y_offset in neighbour_cells_offsets:
+                new_x, new_y = current_cell.x + x_offset, current_cell.y + y_offset
+                neighbour_cell = Coordinates(new_x, new_y)
                 if not game_map.is_valid_coordinates(neighbour_cell):
                     continue
                 if neighbour_cell not in visited_cells and game_map.is_walkable_cell(

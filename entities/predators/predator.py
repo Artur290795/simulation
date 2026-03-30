@@ -12,24 +12,27 @@ class Predator(Creature):
         self.attack_power = attack_power
 
     def make_move(self, game_map: "Map", simulation: "Simulation"):
-        next_cell = self.next_cell_to_target(
+        path = self.get_path_to_target(
             game_map,
             self.coordinates,
             is_target_cell=lambda cell: isinstance(
-                game_map.get_entity(Coordinates(cell.x, cell.y)), Herbivore
+                game_map.get_entity(cell), Herbivore
             ),
         )
-        if next_cell is None:
+        if path is None:
+            self.hp -= 1
             return
-        target_entity = game_map.get_entity(Coordinates(next_cell.x, next_cell.y))
+        steps = min(self.speed, len(path))
+        next_cell = path[steps - 1]
+        target_entity = game_map.get_entity(next_cell)
         if isinstance(target_entity, Herbivore):
             target_entity.hp -= self.attack_power
             simulation.highlight_cells.add(next_cell)
             if target_entity.hp <= 0:
-                game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
+                game_map.remove_entity(next_cell)
                 game_map.remove_entity(self.coordinates)
                 self.coordinates = next_cell
-                game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
+                game_map.set_entity(next_cell, self)
         else:
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
             self.coordinates = next_cell

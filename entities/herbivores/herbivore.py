@@ -9,21 +9,23 @@ class Herbivore(Creature):
         super().__init__(coordinates, hp, speed)
 
     def make_move(self, game_map: "Map", simulaion: "Simulation"):
-        next_cell = self.next_cell_to_target(
+        path = self.get_path_to_target(
             game_map,
             self.coordinates,
             is_target_cell=lambda cell: isinstance(
-                game_map.get_entity(Coordinates(cell.x, cell.y)), Grass
+                game_map.get_entity(cell), Grass
             ),
         )
-        if next_cell is None:
+        if path is None:
             self.hp -= 1
             return
-        target_entity = game_map.get_entity(Coordinates(next_cell.x, next_cell.y))
+        steps = min(self.speed, len(path))
+        next_cell = path[steps - 1]
+        target_entity = game_map.get_entity(next_cell)
         if isinstance(target_entity, Grass):
-            game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
+            game_map.remove_entity(next_cell)
             game_map.remove_entity(self.coordinates)
-            game_map.set_entity(Coordinates(next_cell.x, next_cell.y), self)
+            game_map.set_entity(next_cell, self)
             self.hp += 1
         else:
             game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
