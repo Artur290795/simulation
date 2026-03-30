@@ -11,6 +11,8 @@ from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QFont
 from entities.base.entity import Entity
 from core.coordinates import Coordinates
 from core.game_map import Map
+from entities.herbivores.herbivore import Herbivore
+from entities.predators.predator import Predator
 from entities.static.grass import Grass
 from entities.herbivores.antelope import Antelope
 from entities.herbivores.giraffe import Giraffe
@@ -30,8 +32,10 @@ class MapRenderer(QGraphicsView):
         self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.cell_size = 35
         self.game_map = None
+        self.highlight_cells = None
 
-    def render(self, game_map: Map):
+    def render(self, game_map: Map, highlight_cells=None):
+        self.highlight_cells = highlight_cells or set()
         self._scene.clear()
         self.game_map = game_map
         width = game_map.width * self.cell_size
@@ -47,7 +51,13 @@ class MapRenderer(QGraphicsView):
         rect = QGraphicsRectItem(
             x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size
         )
-        color = QColor(255, 235, 190)
+        if self.highlight_cells and Coordinates(x, y) in self.highlight_cells:
+            color = QColor(255, 255, 0)
+        else:
+            color = QColor(255, 235, 190)
+        tooltip = self._get_tooltip(entity)
+        if tooltip:
+            rect.setToolTip(tooltip)
         rect.setBrush(QBrush(color))
         rect.setPen(QPen(Qt.black))
         self._scene.addItem(rect)
@@ -55,6 +65,8 @@ class MapRenderer(QGraphicsView):
         emoji = self._get_emoji(entity)
         if emoji:
             text = QGraphicsTextItem(emoji)
+            if tooltip:
+                text.setToolTip(tooltip)
             font = QFont("Segoe UI Emoji", self.cell_size // 2)
             text.setFont(font)
             text.setDefaultTextColor(Qt.black)
@@ -72,6 +84,21 @@ class MapRenderer(QGraphicsView):
         for item in items:
             self._scene.removeItem(item)
         self._draw_cell(x, y)
+
+    def _get_tooltip(self, entity: Entity | None):
+        if entity is None:
+            return ""
+        if isinstance(entity, Grass):
+            return "🌿 Трава"
+        if isinstance(entity, Rock):
+            return "🪨 Камень"
+        if isinstance(entity, Tree):
+            return "🌳 Дерево"
+        if isinstance(entity, Herbivore):
+            return f"🦒 Травоядное\n❤️ HP: {entity.hp}\n⚡ Скорость: {entity.speed}"
+        if isinstance(entity, Predator):
+            return f"🦁 Хищник\n❤️ HP: {entity.hp}\n⚡ Скорость: {entity.speed}\n⚔️ Атака: {entity.attack_power}"
+        return str(type(entity).__name__)
 
     @staticmethod
     def _get_emoji(entity: Entity) -> None:

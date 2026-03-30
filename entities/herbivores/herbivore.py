@@ -8,7 +8,7 @@ class Herbivore(Creature):
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
         super().__init__(coordinates, hp, speed)
 
-    def make_move(self, game_map: "Map"):
+    def make_move(self, game_map: "Map", simulaion: "Simulation"):
         next_cell = self.next_cell_to_target(
             game_map,
             self.coordinates,
@@ -17,6 +17,7 @@ class Herbivore(Creature):
             ),
         )
         if next_cell is None:
+            self.hp -= 1
             return
         target_entity = game_map.get_entity(Coordinates(next_cell.x, next_cell.y))
         if isinstance(target_entity, Grass):

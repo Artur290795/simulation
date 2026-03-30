@@ -11,7 +11,7 @@ class Predator(Creature):
         super().__init__(coordinates, hp, speed)
         self.attack_power = attack_power
 
-    def make_move(self, game_map: "Map"):
+    def make_move(self, game_map: "Map", simulation: "Simulation"):
         next_cell = self.next_cell_to_target(
             game_map,
             self.coordinates,
@@ -24,6 +24,7 @@ class Predator(Creature):
         target_entity = game_map.get_entity(Coordinates(next_cell.x, next_cell.y))
         if isinstance(target_entity, Herbivore):
             target_entity.hp -= self.attack_power
+            simulation.highlight_cells.add(next_cell)
             if target_entity.hp <= 0:
                 game_map.remove_entity(Coordinates(next_cell.x, next_cell.y))
                 game_map.remove_entity(self.coordinates)

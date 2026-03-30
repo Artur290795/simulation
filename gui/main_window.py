@@ -13,9 +13,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.simulation = None
         self.setup_ui(20, 20)
-        self.get_creatures_amount()
+        self.initialise_simulation()
 
-    def get_creatures_amount(self):
+    def initialise_simulation(self):
         predators_amount, ok1 = QInputDialog.getInt(
             self,
             "Количество хищников",
@@ -68,16 +68,16 @@ class MainWindow(QMainWindow):
         self.ui.resetButton.clicked.connect(self.on_reset_btn_clicked)
 
     def on_start_btn_clicked(self):
-        self.simulation.start_actions()
+        self.simulation.start_simulation()
 
     def on_pause_btn_clicked(self):
-        self.simulation.pause_actions()
+        self.simulation.pause_simulation()
 
     def on_step_btn_clicked(self):
-        self.simulation.turn_actions()
+        self.simulation.next_turn()
 
     def on_reset_btn_clicked(self):
-        self.simulation.reset_actions()
+        self.simulation.reset_simulation()
 
     def print_info(self):
         self.ui.stepValueLabel.setText(str(self.simulation.game_counter))

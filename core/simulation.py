@@ -20,7 +20,7 @@ class Simulation(QObject):
         self.height = height
         self.map_renderer = None
         self.timer = QTimer()
-        self.timer.timeout.connect(self.turn_actions)
+        self.timer.timeout.connect(self.next_turn)
         self.is_running = False
         print(f"Создана карта размером {width} на {height}")
         self.game_counter = 0
@@ -28,9 +28,10 @@ class Simulation(QObject):
         self.predators_amount = None
         self.herbivores_amount = None
         self.grasses_amount = None
+        self.highlight_cells = None
         self.game_map.setup_default_positions()
 
-    def start_actions(self):
+    def start_simulation(self):
         if not self.is_running:
             self.is_running = True
             # delay = self.map_view.speedSlider.value() if self.map_view else 200
@@ -38,28 +39,29 @@ class Simulation(QObject):
             self.timer.start(delay)
             self.update_world_info()
 
-    def turn_actions(self):
+    def next_turn(self):
         if not self.is_running:
             return
+        self.highlight_cells = set()
         creatures = [
             x for x in self.game_map.game_map.values() if isinstance(x, Creature)
         ]
         for creature in creatures:
             if creature.coordinates is not None:
-                creature.make_move(self.game_map)
+                creature.make_move(self.game_map, self)
                 if creature.hp <= 0:
                     self.game_map.remove_entity(creature.coordinates)
-        self.map_renderer.render(self.game_map)
+        self.map_renderer.render(self.game_map, self.highlight_cells)
         self.update_world_info()
 
         if self.herbivores_amount == 0:
-            self.pause_actions()
+            self.pause_simulation()
 
-    def pause_actions(self):
+    def pause_simulation(self):
         self.timer.stop()
         self.is_running = False
 
-    def reset_actions(self):
+    def reset_simulation(self):
         self.timer.stop()
         self.is_running = False
         self.game_map.clear()
