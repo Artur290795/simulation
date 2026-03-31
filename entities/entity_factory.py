@@ -1,6 +1,5 @@
 from __future__ import annotations
 from random import randint, choice
-
 from entities.static.grass import Grass
 from entities.herbivores.antelope import Antelope
 from entities.herbivores.giraffe import Giraffe
@@ -15,7 +14,7 @@ from entities.static.tree import Tree
 from core.coordinates import Coordinates
 
 
-class CreatureSpawner:
+class EntityFactory:
     PREDATORS = [Lion, Leopard, Hyena]
     HERBIVORES = [Antelope, Giraffe, Zebra]
 
@@ -27,34 +26,34 @@ class CreatureSpawner:
         self.rocks_amount = (predators_amount + herbivores_amount) // 2
         self.trees_amount = (predators_amount + herbivores_amount) // 2
 
-    def respawn(self):
-        self.respawn_creatures(self.predators_amount, Predator)
-        self.respawn_creatures(self.herbivores_amount, Herbivore)
-        self.respawn_creatures(self.grasses_amount, Grass)
-        self.respawn_creatures(self.rocks_amount, Rock)
-        self.respawn_creatures(self.trees_amount, Tree)
+    def create(self):
+        self.create_entities(self.predators_amount, Predator)
+        self.create_entities(self.herbivores_amount, Herbivore)
+        self.create_entities(self.grasses_amount, Grass)
+        self.create_entities(self.rocks_amount, Rock)
+        self.create_entities(self.trees_amount, Tree)
 
-    def respawn_creatures(self, creature_amount: int, entity: type):
-        creature_respawned = 0
-        while creature_respawned < creature_amount:
+    def create_entities(self, entities_amount: int, entity: type):
+        entities_createed = 0
+        while entities_createed < entities_amount:
             new_coord = self._get_random_coordinates()
             if self.game_map.is_empty_cell(new_coord):
                 if entity is Herbivore:
-                    new_entity = self._respawn_herbivore(new_coord)
+                    new_entity = self._create_herbivore(new_coord)
                 elif entity is Predator:
-                    new_entity = self._respawn_predator(new_coord)
+                    new_entity = self._create_predator(new_coord)
                 else:
                     new_entity = entity(new_coord)
                 self.game_map.set_entity(new_coord, new_entity)
-                creature_respawned += 1
+                entities_createed += 1
 
-    def _respawn_herbivore(self, new_coord: Coordinates):
+    def _create_herbivore(self, new_coord: Coordinates):
         creature_parameters = self._get_creature_parameters()
         hp = creature_parameters["hp"]
         speed = creature_parameters["speed"]
         return choice(self.HERBIVORES)(new_coord, hp, speed)
 
-    def _respawn_predator(self, new_coord: Coordinates):
+    def _create_predator(self, new_coord: Coordinates):
         creature_parameters = self._get_creature_parameters(is_predator=True)
         hp = creature_parameters["hp"]
         speed = creature_parameters["speed"]
@@ -65,12 +64,12 @@ class CreatureSpawner:
         creature_parameters = {}
         if is_predator:
             hp = randint(7, 20)
-            speed = randint(2, 5)
-            attack_power = randint(2, 4)
+            speed = randint(1, 3)
+            attack_power = randint(1, 3)
             creature_parameters["attack_power"] = attack_power
         else:
             hp = randint(10, 25)
-            speed = randint(4, 9)
+            speed = randint(1, 2)
         creature_parameters["hp"] = hp
         creature_parameters["speed"] = speed
         return creature_parameters

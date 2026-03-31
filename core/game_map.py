@@ -1,10 +1,11 @@
 from entities.base.entity import Entity
+from entities.entity_factory import EntityFactory
 from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
 from entities.base.creature import Creature  # для аннотации is_walkable_cell
 from core.coordinates import Coordinates
-from entities.respawn_creatures import CreatureSpawner
+
 
 
 class Map:
@@ -12,12 +13,10 @@ class Map:
         self.game_map = {}
         self.width = width
         self.height = height
-        self.creature_spawner = CreatureSpawner(
-            self, predators_amount, herbivores_amount
-        )
+        self.entity_factory = EntityFactory(self, predators_amount, herbivores_amount)
 
     def setup_default_positions(self):
-        self.creature_spawner.respawn()
+        self.entity_factory.create()
 
     def set_entity(self, coordinates: Coordinates, entity: Entity):
         if self.is_valid_coordinates(coordinates):

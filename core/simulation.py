@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QGraphicsView
 from PySide6.QtCore import QObject, QTimer, Signal
+
 from entities.base.creature import Creature
 from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
@@ -34,8 +35,7 @@ class Simulation(QObject):
     def start_simulation(self):
         if not self.is_running:
             self.is_running = True
-            # delay = self.map_view.speedSlider.value() if self.map_view else 200
-            delay = 1500
+            delay = 1200
             self.timer.start(delay)
             self.update_world_info()
 
@@ -51,6 +51,8 @@ class Simulation(QObject):
                 creature.make_move(self.game_map, self)
                 if creature.hp <= 0:
                     self.game_map.remove_entity(creature.coordinates)
+        new_grass_amount = 1
+        self.game_map.entity_factory.create_entities(new_grass_amount, Grass)
         self.map_renderer.render(self.game_map, self.highlight_cells)
         self.update_world_info()
 
