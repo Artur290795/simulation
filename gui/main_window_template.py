@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_window_template.ui'
+## Form generated from reading UI file 'main_window_template2.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.11.0
 ##
@@ -17,8 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGraphicsView, QGridLayout, QGroupBox,
     QHBoxLayout, QLabel, QMainWindow, QPushButton,
-    QSizePolicy, QSlider, QSpacerItem, QTextEdit,
-    QVBoxLayout, QWidget)
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -132,37 +131,8 @@ class Ui_MainWindow(object):
 
         self.topLayout.addWidget(self.resetButton)
 
-        self.speedLabel = QLabel(self.centralwidget)
-        self.speedLabel.setObjectName(u"speedLabel")
-
-        self.topLayout.addWidget(self.speedLabel)
-
-        self.speedSlider = QSlider(self.centralwidget)
-        self.speedSlider.setObjectName(u"speedSlider")
-        self.speedSlider.setMinimum(0)
-        self.speedSlider.setMaximum(1000)
-        self.speedSlider.setValue(200)
-        self.speedSlider.setOrientation(Qt.Horizontal)
-
-        self.topLayout.addWidget(self.speedSlider)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.topLayout.addItem(self.horizontalSpacer)
-
 
         self.verticalLayout.addLayout(self.topLayout)
-
-        self.mapView = QGraphicsView(self.centralwidget)
-        self.mapView.setObjectName(u"mapView")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(1)
-        sizePolicy.setHeightForWidth(self.mapView.sizePolicy().hasHeightForWidth())
-        self.mapView.setSizePolicy(sizePolicy)
-        self.mapView.setMinimumSize(QSize(500, 500))
-
-        self.verticalLayout.addWidget(self.mapView)
 
         self.bottomLayout = QHBoxLayout()
         self.bottomLayout.setObjectName(u"bottomLayout")
@@ -170,35 +140,20 @@ class Ui_MainWindow(object):
         self.infoGroup.setObjectName(u"infoGroup")
         self.gridLayout = QGridLayout(self.infoGroup)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.stepLabel = QLabel(self.infoGroup)
-        self.stepLabel.setObjectName(u"stepLabel")
+        self.grassValueLabel = QLabel(self.infoGroup)
+        self.grassValueLabel.setObjectName(u"grassValueLabel")
 
-        self.gridLayout.addWidget(self.stepLabel, 0, 0, 1, 1)
-
-        self.stepValueLabel = QLabel(self.infoGroup)
-        self.stepValueLabel.setObjectName(u"stepValueLabel")
-
-        self.gridLayout.addWidget(self.stepValueLabel, 0, 1, 1, 1)
-
-        self.sizeLabel = QLabel(self.infoGroup)
-        self.sizeLabel.setObjectName(u"sizeLabel")
-
-        self.gridLayout.addWidget(self.sizeLabel, 1, 0, 1, 1)
-
-        self.sizeValueLabel = QLabel(self.infoGroup)
-        self.sizeValueLabel.setObjectName(u"sizeValueLabel")
-
-        self.gridLayout.addWidget(self.sizeValueLabel, 1, 1, 1, 1)
-
-        self.herbivoresLabel = QLabel(self.infoGroup)
-        self.herbivoresLabel.setObjectName(u"herbivoresLabel")
-
-        self.gridLayout.addWidget(self.herbivoresLabel, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.grassValueLabel, 4, 1, 1, 1)
 
         self.herbivoresValueLabel = QLabel(self.infoGroup)
         self.herbivoresValueLabel.setObjectName(u"herbivoresValueLabel")
 
         self.gridLayout.addWidget(self.herbivoresValueLabel, 2, 1, 1, 1)
+
+        self.statusLabel = QLabel(self.infoGroup)
+        self.statusLabel.setObjectName(u"statusLabel")
+
+        self.gridLayout.addWidget(self.statusLabel, 5, 0, 1, 1)
 
         self.predatorsLabel = QLabel(self.infoGroup)
         self.predatorsLabel.setObjectName(u"predatorsLabel")
@@ -215,20 +170,35 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.grassLabel, 4, 0, 1, 1)
 
-        self.grassValueLabel = QLabel(self.infoGroup)
-        self.grassValueLabel.setObjectName(u"grassValueLabel")
+        self.stepValueLabel = QLabel(self.infoGroup)
+        self.stepValueLabel.setObjectName(u"stepValueLabel")
 
-        self.gridLayout.addWidget(self.grassValueLabel, 4, 1, 1, 1)
-
-        self.statusLabel = QLabel(self.infoGroup)
-        self.statusLabel.setObjectName(u"statusLabel")
-
-        self.gridLayout.addWidget(self.statusLabel, 5, 0, 1, 1)
+        self.gridLayout.addWidget(self.stepValueLabel, 0, 1, 1, 1)
 
         self.statusValueLabel = QLabel(self.infoGroup)
         self.statusValueLabel.setObjectName(u"statusValueLabel")
 
         self.gridLayout.addWidget(self.statusValueLabel, 5, 1, 1, 1)
+
+        self.stepLabel = QLabel(self.infoGroup)
+        self.stepLabel.setObjectName(u"stepLabel")
+
+        self.gridLayout.addWidget(self.stepLabel, 0, 0, 1, 1)
+
+        self.herbivoresLabel = QLabel(self.infoGroup)
+        self.herbivoresLabel.setObjectName(u"herbivoresLabel")
+
+        self.gridLayout.addWidget(self.herbivoresLabel, 2, 0, 1, 1)
+
+        self.sizeValueLabel = QLabel(self.infoGroup)
+        self.sizeValueLabel.setObjectName(u"sizeValueLabel")
+
+        self.gridLayout.addWidget(self.sizeValueLabel, 1, 1, 1, 1)
+
+        self.sizeLabel = QLabel(self.infoGroup)
+        self.sizeLabel.setObjectName(u"sizeLabel")
+
+        self.gridLayout.addWidget(self.sizeLabel, 1, 0, 1, 1)
 
 
         self.bottomLayout.addWidget(self.infoGroup)
@@ -237,11 +207,16 @@ class Ui_MainWindow(object):
         self.logGroup.setObjectName(u"logGroup")
         self.verticalLayout_2 = QVBoxLayout(self.logGroup)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.logTextEdit = QTextEdit(self.logGroup)
-        self.logTextEdit.setObjectName(u"logTextEdit")
-        self.logTextEdit.setReadOnly(True)
+        self.mapView = QGraphicsView(self.logGroup)
+        self.mapView.setObjectName(u"mapView")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(self.mapView.sizePolicy().hasHeightForWidth())
+        self.mapView.setSizePolicy(sizePolicy)
+        self.mapView.setMinimumSize(QSize(500, 500))
 
-        self.verticalLayout_2.addWidget(self.logTextEdit)
+        self.verticalLayout_2.addWidget(self.mapView)
 
 
         self.bottomLayout.addWidget(self.logGroup)
@@ -262,20 +237,19 @@ class Ui_MainWindow(object):
         self.pauseButton.setText(QCoreApplication.translate("MainWindow", u"\u23f8 \u041f\u0430\u0443\u0437\u0430", None))
         self.stepButton.setText(QCoreApplication.translate("MainWindow", u"\u27a1 \u0428\u0430\u0433", None))
         self.resetButton.setText(QCoreApplication.translate("MainWindow", u"\U0001f504 \U00000421\U00000431\U00000440\U0000043e\U00000441", None))
-        self.speedLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f422 \U00000421\U0000043a\U0000043e\U00000440\U0000043e\U00000441\U00000442\U0000044c (\U0000043c\U00000441):", None))
-        self.infoGroup.setTitle(QCoreApplication.translate("MainWindow", u"\U0001f4ca \U00000418\U0000043d\U00000444\U0000043e\U00000440\U0000043c\U00000430\U00000446\U00000438\U0000044f \U0000043e \U00000441\U00000430\U00000432\U00000430\U0000043d\U0000043d\U00000435", None))
-        self.stepLabel.setText(QCoreApplication.translate("MainWindow", u"\u23f1 \u0428\u0430\u0433:", None))
-        self.stepValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.sizeLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f5fa \U00000420\U00000430\U00000437\U0000043c\U00000435\U00000440\U0000044b:", None))
-        self.sizeValueLabel.setText(QCoreApplication.translate("MainWindow", u"0 x 0", None))
-        self.herbivoresLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f992 \U00000422\U00000440\U00000430\U00000432\U0000043e\U0000044f\U00000434\U0000043d\U0000044b\U00000435:", None))
+        self.infoGroup.setTitle(QCoreApplication.translate("MainWindow", u"\U0001f4ca \U00000418\U0000043d\U00000444\U0000043e\U00000440\U0000043c\U00000430\U00000446\U00000438\U0000044f \U0000043e \U00000441\U00000430\U00000432\U00000430\U0000043d\U0000043d\U00000435      ", None))
+        self.grassValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.herbivoresValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.statusLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f4cc \U00000421\U00000442\U00000430\U00000442\U00000443\U00000441:", None))
         self.predatorsLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f981 \U00000425\U00000438\U00000449\U0000043d\U00000438\U0000043a\U00000438:", None))
         self.predatorsValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.grassLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f33f \U00000422\U00000440\U00000430\U00000432\U00000430:", None))
-        self.grassValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.statusLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f4cc \U00000421\U00000442\U00000430\U00000442\U00000443\U00000441:", None))
+        self.stepValueLabel.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.statusValueLabel.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0430\u0443\u0437\u0430", None))
-        self.logGroup.setTitle(QCoreApplication.translate("MainWindow", u"\U0001f4dc \U0000041b\U0000043e\U00000433 \U00000441\U0000043e\U00000431\U0000044b\U00000442\U00000438\U00000439", None))
+        self.stepLabel.setText(QCoreApplication.translate("MainWindow", u"\u23f1 \u0428\u0430\u0433:", None))
+        self.herbivoresLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f992 \U00000422\U00000440\U00000430\U00000432\U0000043e\U0000044f\U00000434\U0000043d\U0000044b\U00000435:", None))
+        self.sizeValueLabel.setText(QCoreApplication.translate("MainWindow", u"0 x 0", None))
+        self.sizeLabel.setText(QCoreApplication.translate("MainWindow", u"\U0001f5fa \U00000420\U00000430\U00000437\U0000043c\U00000435\U00000440\U0000044b:", None))
+        self.logGroup.setTitle(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u0440\u0442\u0430 \u0441\u0430\u0432\u0430\u043d\u043d\u044b", None))
     # retranslateUi
 

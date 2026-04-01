@@ -1,5 +1,6 @@
 from __future__ import annotations
 from entities.base.creature import Creature
+from entities.base.entity import Entity
 from entities.herbivores.herbivore import Herbivore
 from core.coordinates import Coordinates
 
@@ -11,30 +12,11 @@ class Predator(Creature):
         super().__init__(coordinates, hp, speed)
         self.attack_power = attack_power
 
-    def make_move(self, game_map: "Map", simulation: "Simulation"):
-        path = self.get_path_to_target(
-            game_map,
-            self.coordinates,
-            is_target_cell=lambda cell: isinstance(
-                game_map.get_entity(cell), Herbivore
-            ),
-        )
-        if path is None:
-            self.hp -= 1
-            return
-        steps = min(self.speed, len(path))
-        next_cell = path[steps - 1]
-        target_entity = game_map.get_entity(next_cell)
-        if isinstance(target_entity, Herbivore):
-            target_entity.hp -= self.attack_power
-            simulation.highlight_cells.add(next_cell)
-            if target_entity.hp <= 0:
-                game_map.remove_entity(next_cell)
-                game_map.remove_entity(self.coordinates)
-                self.coordinates = next_cell
-                game_map.set_entity(next_cell, self)
-        else:
-            game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
-            self.coordinates = next_cell
-            game_map.set_entity(next_cell, self)
-        self.hp -= 1
+    def get_target_class(self) -> Herbivore:
+        return Herbivore
+
+    def is_attack(self, target: Entity) -> bool:
+        return isinstance(target, Herbivore)
+
+    def interact_with_target(self, target: Herbivore) -> None:
+        target.hp -= self.attack_power

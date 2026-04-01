@@ -1,6 +1,6 @@
-from PySide6.QtWidgets import QLabel, QMainWindow, QInputDialog, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QInputDialog, QMessageBox
 
-from gui.main_window_template2 import Ui_MainWindow
+from gui.main_window_template import Ui_MainWindow
 from gui.validation import is_valid_number
 from gui.constants import PREDATORS_DEFAULT_AMOUNT, HERBIVORES_DEFAULT_AMOUNT
 from core.simulation import Simulation
@@ -12,8 +12,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.simulation = None
-        self.setup_ui(20, 20)
+        self.setup_connectors()
         self.initialise_simulation()
+        self.ui.statusValueLabel.setText("Готов к работе")
 
     def initialise_simulation(self):
         predators_amount, ok1 = QInputDialog.getInt(
@@ -52,14 +53,7 @@ class MainWindow(QMainWindow):
         self.simulation.set_map_view(self.ui.mapView)
         return
 
-    def setup_ui(self, width, height):
-        self.size_label = QLabel(f"{width} x {height}")
-        layout = self.ui.infoGroup.layout()
-        row = layout.rowCount()
-        layout.addWidget(QLabel("Размеры:"), row, 0)
-        layout.addWidget(self.size_label, row, 1)
-
-        self.setup_connectors()
+        
 
     def setup_connectors(self):
         self.ui.startButton.clicked.connect(self.on_start_btn_clicked)
@@ -68,15 +62,18 @@ class MainWindow(QMainWindow):
         self.ui.resetButton.clicked.connect(self.on_reset_btn_clicked)
 
     def on_start_btn_clicked(self):
+        self.ui.statusLabel.setText("Выполняется симуляция...")
         self.simulation.start_simulation()
 
     def on_pause_btn_clicked(self):
+        self.ui.statusValueLabel.setText("Пауза")
         self.simulation.pause_simulation()
 
     def on_step_btn_clicked(self):
         self.simulation.next_turn()
 
     def on_reset_btn_clicked(self):
+        self.ui.statusValueLabel.setText("Готов к работе")
         self.simulation.reset_simulation()
 
     def print_info(self):

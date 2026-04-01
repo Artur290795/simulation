@@ -1,5 +1,6 @@
 from __future__ import annotations
 from entities.base.creature import Creature
+from entities.base.entity import Entity
 from entities.static.grass import Grass
 from core.coordinates import Coordinates
 
@@ -8,27 +9,11 @@ class Herbivore(Creature):
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
         super().__init__(coordinates, hp, speed)
 
-    def make_move(self, game_map: "Map", simulaion: "Simulation"):
-        path = self.get_path_to_target(
-            game_map,
-            self.coordinates,
-            is_target_cell=lambda cell: isinstance(
-                game_map.get_entity(cell), Grass
-            ),
-        )
-        if path is None:
-            self.hp -= 1
-            return
-        steps = min(self.speed, len(path))
-        next_cell = path[steps - 1]
-        target_entity = game_map.get_entity(next_cell)
-        if isinstance(target_entity, Grass):
-            game_map.remove_entity(next_cell)
-            game_map.remove_entity(self.coordinates)
-            game_map.set_entity(next_cell, self)
-            self.hp += 1
-        else:
-            game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
-            self.coordinates = next_cell
-            game_map.set_entity(next_cell, self)
-        self.hp -= 1
+    def get_target_class(self) -> Grass:
+        return Grass
+
+    def is_attack(self, target: Entity) -> bool:
+        return isinstance(target, Grass)
+
+    def interact_with_target(self, target: Grass) -> None:
+        self.hp += 1

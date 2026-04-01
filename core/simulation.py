@@ -40,15 +40,13 @@ class Simulation(QObject):
             self.update_world_info()
 
     def next_turn(self):
-        if not self.is_running:
-            return
         self.highlight_cells = set()
         creatures = [
             x for x in self.game_map.game_map.values() if isinstance(x, Creature)
         ]
         for creature in creatures:
             if creature.coordinates is not None:
-                creature.make_move(self.game_map, self)
+                creature.make_move(self.game_map)
                 if creature.hp <= 0:
                     self.game_map.remove_entity(creature.coordinates)
         new_grass_amount = 1
@@ -56,7 +54,7 @@ class Simulation(QObject):
         self.map_renderer.render(self.game_map, self.highlight_cells)
         self.update_world_info()
 
-        if self.herbivores_amount == 0:
+        if len(creatures) == 0:
             self.pause_simulation()
 
     def pause_simulation(self):

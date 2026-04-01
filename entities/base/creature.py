@@ -14,8 +14,49 @@ class Creature(Entity):
         self.speed = speed
 
     @abstractmethod
-    def make_move(self, game_map: "Map"):
+    def get_target_class(self):
         pass
+
+    @abstractmethod
+    def is_attack(self, target):
+        pass
+
+    @abstractmethod
+    def interact_with_target(self, target):
+        pass
+
+    def make_move(self, game_map: "Map"):
+        path = self.get_path_to_target(
+            game_map,
+            self.coordinates,
+            is_target_cell=lambda cell: isinstance(
+                game_map.get_entity(cell), self.get_target_class()
+            ),
+        )
+        if path is None:
+            self.hp -= 1
+            return
+        steps = min(self.speed, len(path))
+        next_cell = path[steps - 1]
+        target_entity = game_map.get_entity(next_cell)
+        if self.is_attack(target_entity):
+            self.interact_with_target(target_entity)
+            if hasattr(target_entity, "hp"):
+                if target_entity.hp <= 0:
+                    game_map.remove_entity(next_cell)
+                    game_map.remove_entity(self.coordinates)
+                    self.coordinates = next_cell
+                    game_map.set_entity(next_cell, self)
+            else:
+                game_map.remove_entity(next_cell)
+                game_map.remove_entity(self.coordinates)
+                self.coordinates = next_cell
+                game_map.set_entity(next_cell, self)
+        else:
+            game_map.remove_entity(Coordinates(self.coordinates.x, self.coordinates.y))
+            self.coordinates = next_cell
+            game_map.set_entity(next_cell, self)
+        self.hp -= 1
 
     def get_path_to_target(
         self,
