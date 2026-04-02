@@ -1,0 +1,30 @@
+__pycache__
+
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# DB files
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE stuff
+.idea/
+.vscode/
+
+# log files
+*.log
+
+# build
+.build
+.python
+
+# specs
+.specs
