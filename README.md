@@ -27,7 +27,7 @@
 ### Установка зависимостей
 
 ```bash
-pip install PySide6
+pip install pyside6
 ```
 ### Запуск
 ```bash
