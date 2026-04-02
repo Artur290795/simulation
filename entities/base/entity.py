@@ -4,7 +4,7 @@
 
 from abc import ABC
 
-from core.coordinates import Coordinates
+from core import Coordinates
 
 
 class Entity(ABC):

@@ -7,7 +7,7 @@ from random import randint, choice
 from entities.static import Grass, Rock, Tree
 from entities.herbivores import Antelope, Giraffe, Herbivore, Zebra
 from entities.predators import Hyena, Leopard, Lion, Predator
-from core.coordinates import Coordinates
+from core import Coordinates
 
 
 class EntityFactory:

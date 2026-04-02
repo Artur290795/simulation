@@ -8,7 +8,7 @@ from collections import deque
 from typing import Callable
 
 from entities.base.entity import Entity
-from core.coordinates import Coordinates
+from core import Coordinates
 
 
 class Creature(Entity):

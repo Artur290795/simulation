@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QMainWindow, QInputDialog, QMessageBox
 
 from gui.main_window_template import Ui_MainWindow
 from gui.constants import PREDATORS_DEFAULT_AMOUNT, HERBIVORES_DEFAULT_AMOUNT
-from core.simulation import Simulation
+from core import Simulation
 
 
 class MainWindow(QMainWindow):
