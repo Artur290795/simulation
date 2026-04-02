@@ -1,3 +1,6 @@
+"""
+    Модуль для главного класса всех травоядных существ
+"""
 from __future__ import annotations
 from entities.base.creature import Creature
 from entities.base.entity import Entity
@@ -6,6 +9,13 @@ from core.coordinates import Coordinates
 
 
 class Herbivore(Creature):
+    """
+    Главный класс всех травоядных существ
+    Описывает их основные характеристики:
+    Цель – трава.
+    При взаимодействии увеличивает HP на 1 (поедание).
+    Не атакует, а поедает траву, при этом перемещается на её клетку.
+    """
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
         super().__init__(coordinates, hp, speed)
 

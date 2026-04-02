@@ -1,14 +1,20 @@
+"""
+    Реализует игровое поле
+"""
 from entities.base.entity import Entity
 from entities.entity_factory import EntityFactory
 from entities.static.grass import Grass
 from entities.herbivores.herbivore import Herbivore
 from entities.predators.predator import Predator
-from entities.base.creature import Creature  # для аннотации is_walkable_cell
+from entities.base.creature import Creature
 from core.coordinates import Coordinates
 
 
 
 class Map:
+    """
+    Хранит сущности в словаре game_map с ключами Coordinates
+    """
     def __init__(self, width, height, predators_amount: int, herbivores_amount: int):
         self.game_map = {}
         self.width = width

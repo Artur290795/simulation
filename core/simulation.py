@@ -1,4 +1,8 @@
-from PySide6.QtWidgets import QGraphicsView
+"""
+Модуль для класса симуляции
+"""
+
+from PySide6.QtWidgets import QGraphicsView, QMessageBox
 from PySide6.QtCore import QObject, QTimer, Signal
 
 from entities.base.creature import Creature
@@ -10,6 +14,17 @@ from core.renderer import MapRenderer
 
 
 class Simulation(QObject):
+    """
+    Главный класс приложения, включает в себя:
+        - Карту
+        - Счётчик ходов
+        - Рендерер поля
+        - next_turn() - просимулировать и отрендерить один ход
+        - start_simulation() - запустить бесконечный цикл симуляции и рендеринга
+        - pause_simulation() - приостановить бесконечный цикл симуляции и рендеринга
+        - reset_simulation() - перезапустить симуляцию
+    """
+
     data_changed = Signal()
 
     def __init__(
@@ -23,13 +38,11 @@ class Simulation(QObject):
         self.timer = QTimer()
         self.timer.timeout.connect(self.next_turn)
         self.is_running = False
-        print(f"Создана карта размером {width} на {height}")
         self.game_counter = 0
         self.map_view = None
         self.predators_amount = None
         self.herbivores_amount = None
         self.grasses_amount = None
-        self.highlight_cells = None
         self.game_map.setup_default_positions()
 
     def start_simulation(self):
@@ -40,7 +53,6 @@ class Simulation(QObject):
             self.update_world_info()
 
     def next_turn(self):
-        self.highlight_cells = set()
         creatures = [
             x for x in self.game_map.game_map.values() if isinstance(x, Creature)
         ]
@@ -49,13 +61,17 @@ class Simulation(QObject):
                 creature.make_move(self.game_map)
                 if creature.hp <= 0:
                     self.game_map.remove_entity(creature.coordinates)
+
         new_grass_amount = 1
         self.game_map.entity_factory.create_entities(new_grass_amount, Grass)
-        self.map_renderer.render(self.game_map, self.highlight_cells)
-        self.update_world_info()
+        self.map_renderer.render(self.game_map)
 
         if len(creatures) == 0:
             self.pause_simulation()
+            QMessageBox.information(
+                None, "Завершение симуляции", "Все существа вымерли, симуляция окончена"
+            )
+        self.update_world_info()
 
     def pause_simulation(self):
         self.timer.stop()

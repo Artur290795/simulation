@@ -1,3 +1,8 @@
+"""
+Точка входа в приложение.
+Создаёт экземпляр QApplication, открывает главное окно и запускает цикл обработки событий.
+"""
+
 import sys
 from PySide6.QtWidgets import QApplication
 from gui.main_window import MainWindow

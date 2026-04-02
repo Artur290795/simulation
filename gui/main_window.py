@@ -1,12 +1,31 @@
+"""
+Главное окно приложения, связывающее интерфейс и симуляцию.
+"""
+
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QMessageBox
 
 from gui.main_window_template import Ui_MainWindow
-from gui.validation import is_valid_number
 from gui.constants import PREDATORS_DEFAULT_AMOUNT, HERBIVORES_DEFAULT_AMOUNT
 from core.simulation import Simulation
 
 
 class MainWindow(QMainWindow):
+    """
+    ui – объект сгенерированного интерфейса.
+
+    simulation – экземпляр Simulation.
+
+    initialise_simulation –
+    запрашивает количество существ через диалоги, создаёт симуляцию, подключает сигналы и рендерер.
+
+    setup_connectors – подключает кнопки к методам.
+
+    print_info – обновляет метки статистики (вызывается по сигналу).
+
+    on_start_btn_clicked, on_pause_btn_clicked, on_step_btn_clicked, on_reset_btn_clicked –
+    обработчики кнопок.
+    """
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -31,9 +50,7 @@ class MainWindow(QMainWindow):
                 HERBIVORES_DEFAULT_AMOUNT,
             )
             if ok2:
-                if is_valid_number(predators_amount) and is_valid_number(
-                    herbivores_amount
-                ):
+                if 0 <= predators_amount and 0 <= herbivores_amount:
                     self.simulation = Simulation(predators_amount, herbivores_amount)
                     self.simulation.data_changed.connect(self.print_info)
                     self.simulation.set_map_view(self.ui.mapView)
@@ -53,8 +70,6 @@ class MainWindow(QMainWindow):
         self.simulation.set_map_view(self.ui.mapView)
         return
 
-        
-
     def setup_connectors(self):
         self.ui.startButton.clicked.connect(self.on_start_btn_clicked)
         self.ui.pauseButton.clicked.connect(self.on_pause_btn_clicked)
@@ -62,7 +77,7 @@ class MainWindow(QMainWindow):
         self.ui.resetButton.clicked.connect(self.on_reset_btn_clicked)
 
     def on_start_btn_clicked(self):
-        self.ui.statusLabel.setText("Выполняется симуляция...")
+        self.ui.statusValueLabel.setText("Выполняется симуляция...")
         self.simulation.start_simulation()
 
     def on_pause_btn_clicked(self):
@@ -84,3 +99,5 @@ class MainWindow(QMainWindow):
         self.ui.herbivoresValueLabel.setText(str(self.simulation.herbivores_amount))
         self.ui.predatorsValueLabel.setText(str(self.simulation.predators_amount))
         self.ui.grassValueLabel.setText(str(self.simulation.grasses_amount))
+        if not self.simulation.is_running:
+            self.ui.statusValueLabel.setText("Симуляция окончена")

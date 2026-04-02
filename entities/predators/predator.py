@@ -1,3 +1,7 @@
+"""
+Модуль для главного класса всех хищных существ
+"""
+
 from __future__ import annotations
 from entities.base.creature import Creature
 from entities.base.entity import Entity
@@ -6,6 +10,14 @@ from core.coordinates import Coordinates
 
 
 class Predator(Creature):
+    """
+    Главный класс всех хищных] существ
+    Описывает их основные характеристики:
+    Цель – травоядное существо.
+    При взаимодействии увеличивает HP жертвы на attach_pwoer.
+    При смерти жертвы перемещается на её клетку.
+    """
+
     def __init__(
         self, coordinates: Coordinates, hp: int, speed: int, attack_power: int
     ):

@@ -1,3 +1,7 @@
+"""
+Модуль для фабрики создания сущностей
+"""
+
 from __future__ import annotations
 from random import randint, choice
 from entities.static.grass import Grass
@@ -15,6 +19,17 @@ from core.coordinates import Coordinates
 
 
 class EntityFactory:
+    """
+    Фабрика для содания сущностей
+
+    create_entities(amount, entity_class) – 
+        создаёт указанное количество сущностей случайным образом на свободные клетки.
+
+    create() – создаёт полный набор объектов в количествах, заданных при инициализации.
+
+    класс имеет методы для создания каждого из видом сущностей
+    """
+
     PREDATORS = [Lion, Leopard, Hyena]
     HERBIVORES = [Antelope, Giraffe, Zebra]
 

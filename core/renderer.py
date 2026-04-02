@@ -1,3 +1,7 @@
+"""
+Отрисовывает карту в графическом интерфейсе с использованием PySide6
+"""
+
 from PySide6.QtWidgets import (
     QGraphicsView,
     QGraphicsScene,
@@ -11,12 +15,13 @@ from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QFont
 from entities.base.entity import Entity
 from core.coordinates import Coordinates
 from core.game_map import Map
-from entities.herbivores.herbivore import Herbivore
-from entities.predators.predator import Predator
+
 from entities.static.grass import Grass
 from entities.herbivores.antelope import Antelope
 from entities.herbivores.giraffe import Giraffe
 from entities.herbivores.zebra import Zebra
+from entities.herbivores.herbivore import Herbivore
+from entities.predators.predator import Predator
 from entities.predators.hyena import Hyena
 from entities.predators.leopard import Leopard
 from entities.predators.lion import Lion
@@ -25,6 +30,10 @@ from entities.static.tree import Tree
 
 
 class MapRenderer(QGraphicsView):
+    """
+    Визуализирует карту как сетку клеток с эмодзи и всплывающими подсказками
+    """
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._scene = QGraphicsScene(self)
@@ -32,10 +41,8 @@ class MapRenderer(QGraphicsView):
         self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.cell_size = 35
         self.game_map = None
-        self.highlight_cells = None
 
-    def render(self, game_map: Map, highlight_cells=None):
-        self.highlight_cells = highlight_cells or set()
+    def render(self, game_map: Map):
         self._scene.clear()
         self.game_map = game_map
         width = game_map.width * self.cell_size
@@ -51,10 +58,8 @@ class MapRenderer(QGraphicsView):
         rect = QGraphicsRectItem(
             x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size
         )
-        if self.highlight_cells and Coordinates(x, y) in self.highlight_cells:
-            color = QColor(255, 255, 0)
-        else:
-            color = QColor(255, 235, 190)
+
+        color = QColor(255, 235, 190)
         tooltip = self._get_tooltip(entity)
         if tooltip:
             rect.setToolTip(tooltip)

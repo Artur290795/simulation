@@ -1,3 +1,7 @@
+"""
+Модуль для главного абстрактного класса всех живых существ
+"""
+
 from __future__ import annotations
 from abc import abstractmethod
 from collections import deque
@@ -8,6 +12,26 @@ from core.coordinates import Coordinates
 
 
 class Creature(Entity):
+    """
+    Класс Creature (наследник Entity)
+
+    hp – здоровье.
+
+    speed – количество клеток, которое может пройти за ход.
+
+    Абстрактные методы:
+
+    get_target_class() – возвращает класс цели (трава/травоядное).
+
+    is_attack(target) – определяет, нужно ли атаковать цель.
+
+    interact_with_target(target) – выполняет взаимодействие (атака/поедание).
+
+    make_move(game_map) – общая логика хода: поиск пути до цели, учёт скорости, перемещение, голод.
+
+    get_path_to_target(game_map, start_cell, is_target_cell) – метод для поиска кратчайшего пути и возврата всего списка клеток.
+    """
+
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
         super().__init__(coordinates)
         self.hp = hp
