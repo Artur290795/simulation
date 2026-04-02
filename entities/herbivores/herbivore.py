@@ -13,7 +13,7 @@ class Herbivore(Creature):
     Главный класс всех травоядных существ
     Описывает их основные характеристики:
     Цель – трава.
-    При взаимодействии увеличивает HP на 1 (поедание).
+    При взаимодействии увеличивает HP на 2 (поедание).
     Не атакует, а поедает траву, при этом перемещается на её клетку.
     """
     def __init__(self, coordinates: Coordinates, hp: int, speed: int):
@@ -26,4 +26,4 @@ class Herbivore(Creature):
         return isinstance(target, Grass)
 
     def interact_with_target(self, target: Grass) -> None:
-        self.hp += 1
+        self.hp += 2

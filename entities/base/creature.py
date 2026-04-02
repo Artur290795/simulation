@@ -70,6 +70,7 @@ class Creature(Entity):
                     game_map.remove_entity(next_cell)
                     game_map.remove_entity(self.coordinates)
                     self.coordinates = next_cell
+                    self.hp += 2
                     game_map.set_entity(next_cell, self)
             else:
                 game_map.remove_entity(next_cell)
