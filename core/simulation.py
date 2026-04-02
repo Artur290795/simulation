@@ -5,10 +5,10 @@
 from PySide6.QtWidgets import QGraphicsView, QMessageBox
 from PySide6.QtCore import QObject, QTimer, Signal
 
-from entities.base.creature import Creature
-from entities.static.grass import Grass
-from entities.herbivores.herbivore import Herbivore
-from entities.predators.predator import Predator
+from entities.base import Creature
+from entities.static import Grass
+from entities.herbivores import Herbivore
+from entities.predators import Predator
 from core.game_map import Map
 from core.renderer import MapRenderer
 

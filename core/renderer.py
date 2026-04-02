@@ -12,21 +12,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QFont
 
 
-from entities.base.entity import Entity
 from core.coordinates import Coordinates
 from core.game_map import Map
-
-from entities.static.grass import Grass
-from entities.herbivores.antelope import Antelope
-from entities.herbivores.giraffe import Giraffe
-from entities.herbivores.zebra import Zebra
-from entities.herbivores.herbivore import Herbivore
-from entities.predators.predator import Predator
-from entities.predators.hyena import Hyena
-from entities.predators.leopard import Leopard
-from entities.predators.lion import Lion
-from entities.static.rock import Rock
-from entities.static.tree import Tree
+from entities.base import Entity
+from entities.herbivores import Antelope, Giraffe, Zebra, Herbivore
+from entities.predators import Predator, Hyena, Leopard, Lion
+from entities.static import Rock, Tree, Grass
 
 
 class MapRenderer(QGraphicsView):

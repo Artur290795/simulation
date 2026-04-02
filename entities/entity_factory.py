@@ -4,17 +4,9 @@
 
 from __future__ import annotations
 from random import randint, choice
-from entities.static.grass import Grass
-from entities.herbivores.antelope import Antelope
-from entities.herbivores.giraffe import Giraffe
-from entities.herbivores.herbivore import Herbivore
-from entities.herbivores.zebra import Zebra
-from entities.predators.hyena import Hyena
-from entities.predators.leopard import Leopard
-from entities.predators.lion import Lion
-from entities.predators.predator import Predator
-from entities.static.rock import Rock
-from entities.static.tree import Tree
+from entities.static import Grass, Rock, Tree
+from entities.herbivores import Antelope, Giraffe, Herbivore, Zebra
+from entities.predators import Hyena, Leopard, Lion, Predator
 from core.coordinates import Coordinates
 
 
@@ -22,7 +14,7 @@ class EntityFactory:
     """
     Фабрика для содания сущностей
 
-    create_entities(amount, entity_class) – 
+    create_entities(amount, entity_class) –
         создаёт указанное количество сущностей случайным образом на свободные клетки.
 
     create() – создаёт полный набор объектов в количествах, заданных при инициализации.
